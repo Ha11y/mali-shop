@@ -7,14 +7,19 @@ import HelloWorld from '@/components/HelloWorld.vue'
 <template>
 <el-button type="primary">Primary</el-button>
   <RouterView />
+  <div class="test">
+    test scss
+  </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 header {
   line-height: 1.5;
   max-height: 100vh;
 }
-
+.test{
+  color: $priceColor;
+}
 .logo {
   display: block;
   margin: 0 auto 2rem;

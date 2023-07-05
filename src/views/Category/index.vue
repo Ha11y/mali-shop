@@ -4,17 +4,21 @@ import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import { getBannerApi } from "@/apis/home";
 import GoodItem from '../Home/components/GoodItem.vue'
+import {onBeforeRouteUpdate} from 'vue-router'
+
 const categoryData = ref({});
 const route = useRoute();
 
-const getCategoryData = async () => {
-  const res = await getCategoryAPI(route.params.id);
+const getCategoryData = async (id=route.params.id) => {
+  const res = await getCategoryAPI(id);
   categoryData.value = res.result;
 };
 onMounted(() => {
   getCategoryData();
 });
-
+onBeforeRouteUpdate((to)=>{
+    getCategoryData(to.params.id)
+})
 const bannerList = ref([]);
 const getBanner = async () => {
   const res = await getBannerApi({

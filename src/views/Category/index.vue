@@ -1,17 +1,29 @@
 <script setup>
-import {getCategoryAPI} from '@/apis/category'
-import { onMounted ,ref} from 'vue'
-import {useRoute} from 'vue-router'
-const categoryData= ref({})
-const route = useRoute()
+import { getCategoryAPI } from "@/apis/category";
+import { onMounted, ref } from "vue";
+import { useRoute } from "vue-router";
+import { getBannerApi } from "@/apis/home";
+const categoryData = ref({});
+const route = useRoute();
 
-const getCategoryData= async ()=>{
-      const res =await getCategoryAPI(route.params.id)
-      categoryData.value=res.result
-}
-onMounted(()=>{
-    getCategoryData()
-})
+const getCategoryData = async () => {
+  const res = await getCategoryAPI(route.params.id);
+  categoryData.value = res.result;
+};
+onMounted(() => {
+  getCategoryData();
+});
+
+const bannerList = ref([]);
+const getBanner = async () => {
+  const res = await getBannerApi({
+     distributionSite: '2'
+  });
+  bannerList.value = res.result;
+};
+onMounted(() => {
+  getBanner();
+});
 </script>
 
 <template>
@@ -21,8 +33,16 @@ onMounted(()=>{
       <div class="bread-container">
         <el-breadcrumb separator=">">
           <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-          <el-breadcrumb-item>{{categoryData.name}}</el-breadcrumb-item>
+          <el-breadcrumb-item>{{ categoryData.name }}</el-breadcrumb-item>
         </el-breadcrumb>
+      </div>
+      <!-- 轮播图 -->
+      <div class="home-banner">
+        <el-carousel height="500px">
+          <el-carousel-item v-for="item in bannerList" :key="item.id">
+            <img :src="item.imgUrl" alt="" />
+          </el-carousel-item>
+        </el-carousel>
       </div>
     </div>
   </div>
@@ -30,6 +50,19 @@ onMounted(()=>{
 
 
 <style scoped lang="scss">
+.home-banner {
+  width: 1240px;
+  height: 500px;
+  margin:0 auto;
+  left: 0;
+  top: 0;
+  z-index: 98;
+
+  img {
+    width: 100%;
+    height: 500px;
+  }
+}
 .top-category {
   h3 {
     font-size: 28px;
@@ -51,7 +84,6 @@ onMounted(()=>{
       li {
         width: 168px;
         height: 160px;
-
 
         a {
           text-align: center;

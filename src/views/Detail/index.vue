@@ -2,6 +2,7 @@
 import {getDetail} from '@/apis/detail'
 import {ref,onMounted } from 'vue'
 import {useRoute} from 'vue-router'
+import DetailHot from './components/DetailHot.vue'
 const route= useRoute()
 const goods=ref({})
 const getGoods=async ()=>{
@@ -48,9 +49,9 @@ onMounted(()=>{getGoods()})
                   <p>{{goods.collectCount}}+</p>
                   <p><i class="iconfont icon-favorite-filling"></i>收藏商品</p>
                 </li>
-                <li v-if="goods.brand">
+                <li>
                   <p>品牌信息</p>
-                  <p>{{goods.brand.name}} </p>
+                  <p>{{goods.brand?.name}} </p>
                   <p><i class="iconfont icon-dynamic-filling"></i>品牌主页</p>
                 </li>
               </ul>
@@ -94,26 +95,27 @@ onMounted(()=>{getGoods()})
           <div class="goods-footer">
             <div class="goods-article">
               <!-- 商品详情 -->
-              <div class="goods-tabs" v-if="goods.details">
+              <div class="goods-tabs" >
                 <nav>
                   <a>商品详情</a>
                 </nav>
                 <div class="goods-detail" >
                   <!-- 属性 -->
                   <ul class="attrs" > 
-                    <li v-for="item in goods.details.properties" :key="item.value">
+                    <li v-for="item in goods.details?.properties" :key="item.value">
                       <span class="dt">{{ item.name }}</span>
                       <span class="dd">{{ item.value }}</span>
                     </li>
                   </ul>
                   <!-- 图片 -->
-           <img  v-for="img in goods.details.pictures" :src="img" :key="img" alt="">
+           <img  v-for="img in goods.details?.pictures" :src="img" :key="img" alt="">
                 </div>
               </div>
             </div>
             <!-- 24热榜+专题推荐 -->
             <div class="goods-aside">
-
+            <DetailHot/>
+            <DetailHot/>
             </div>
           </div>
         </div>

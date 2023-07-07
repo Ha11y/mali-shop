@@ -29,7 +29,14 @@ const rules ={
        
     ]
 }
-
+const formRef=ref(null)
+const doLogin=()=>{
+    formRef.value.validator((valid)=>{
+    if(valid){
+        
+    }
+    })
+}
 </script>
 
 
@@ -66,8 +73,8 @@ const rules ={
                 <el-checkbox  size="large" v-model="form.agree" >
                   我已同意隐私条款和服务条款
                 </el-checkbox>
-              </el-form-item>
-              <el-button size="large" class="subBtn">点击登录</el-button>
+              </el-form-item > 
+              <el-button :ref="formRef" @click="doLogin" size="large" class="subBtn">点击登录</el-button>
             </el-form>
           </div>
         </div>

@@ -1,9 +1,9 @@
-import requset from '@/utils/http'
+import request from '@/utils/http'
 //加入购物车
-export const insertCartAPI =()=>{
-    return requset({
+export const insertCartAPI =({skuId,count})=>{
+    return request({
         url:'/member/cart',
-        method:postMessage,
+        method:'POST',
          data:{
             skuId,
             count
@@ -12,7 +12,17 @@ export const insertCartAPI =()=>{
 }
 
 export const findNewCartListAPI =()=>{
-    return requset({
+    return request({
         url:'member/cart'
     })
 }
+
+export const delCartAPI = (ids) => {
+    return request({
+      url: '/member/cart',
+      method: 'DELETE',
+      data: {
+        ids
+      }
+    })
+  }

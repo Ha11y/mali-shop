@@ -1,6 +1,6 @@
 <script setup>
 import {getCategoryAPI} from '@/apis/layout.js' 
-import {useCategoryStore} from '@/stores/category.js'
+import {useCategoryStore} from '@/stores/categoryStore.js'
 import HeaderCart from '@/views/Layout/components/HeaderCart.vue'
 
 const categoryStore = useCategoryStore()

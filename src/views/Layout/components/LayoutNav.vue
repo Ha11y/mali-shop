@@ -1,5 +1,5 @@
 <script setup>
-import {useuserStore} from '@/stores/user'
+import {useuserStore} from '@/stores/userStore'
 import {useRouter} from 'vue-router'
 const userStore=useuserStore()
 const router = useRouter()

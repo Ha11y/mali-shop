@@ -3,7 +3,7 @@ import {ref} from 'vue'
 import { ElMessage } from 'element-plus'
 import 'element-plus/theme-chalk/el-message.css'
 import {useRouter} from 'vue-router'
-import {useuserStore} from '@/stores/user'
+import {useuserStore} from '@/stores/userStore'
 const userStore=useuserStore()
 //准备表单对象
 const form =ref({

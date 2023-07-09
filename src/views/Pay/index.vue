@@ -1,5 +1,14 @@
 <script setup>
-const payInfo = {}
+import {getOrderAPI } from '@/apis/pay'
+import {onMounted, ref} from 'vue'
+import { useRoute } from 'vue-router'
+const route = useRoute()
+const payInfo = ref({})
+const getPayInfo=async ()=>{
+     const res= await getOrderAPI(route.query.id)
+     payInfo.value=res.result
+}
+onMounted(()=>getPayInfo())
 </script>
 
 
@@ -15,7 +24,7 @@ const payInfo = {}
         </div>
         <div class="amount">
           <span>应付总额：</span>
-          <span>¥{{ payInfo.payMoney?.toFixed(2) }}</span>
+          <span>¥{{ payInfo.value.payMoney?.toFixed(2) }}</span>
         </div>
       </div>
       <!-- 付款方式 -->

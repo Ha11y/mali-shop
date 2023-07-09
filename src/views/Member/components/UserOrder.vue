@@ -3,14 +3,15 @@ import {getUserOrder} from '@/apis/order'
 import {onMounted, ref} from 'vue'
 const orderList = ref([])
 const params =ref({
-    OrderState:0,
+    orderState:0,
     page:1,
     pageSize:2
 })
+const total =ref(0)
 const getOrder=async ()=>{
      const res =await getUserOrder(params.value)
      orderList.value=res.result.items
-     
+     total.value=res.result.counts
 } 
 onMounted(()=>getOrder())
 // tab列表
@@ -24,13 +25,20 @@ const tabTypes = [
   { name: "cancel", label: "已取消" }
 ]
 // 订单列表
-
-
+const tabChange= (type)=>{
+    console.log(type)
+    params.value.orderState=type
+    getOrder()
+}
+const pageChange= (page)=>{
+    params.value.page=page
+    getOrder()
+}
 </script>
 
 <template>
   <div class="order-container">
-    <el-tabs>
+    <el-tabs @tab-change="tabChange">
       <!-- tab切换 -->
       <el-tab-pane v-for="item in tabTypes" :key="item.name" :label="item.label" />
 
@@ -106,9 +114,9 @@ const tabTypes = [
               </div>
             </div>
           </div>
-          <!-- 分页 -->
+          <!-- 分页 --> 
           <div class="pagination-container">
-            <el-pagination background layout="prev, pager, next" />
+            <el-pagination :total="total" @current-change="pageChange" :page-size="params.pageSize" background layout="prev, pager, next" />
           </div>
         </div>
       </div>
